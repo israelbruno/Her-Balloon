@@ -4,7 +4,6 @@
 --
 -----------------------------------------------------------------------------------------
 
-
 -- Configuração de transição para menu
 
 local configTransicaoMenu = {
