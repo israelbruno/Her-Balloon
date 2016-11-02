@@ -6,7 +6,7 @@ application =
 		width = 1080,
 		height = 1920, 
 		scale = "zoomEven",
-		fps = 30,
+		fps = 60,
 		
 		--[[
 		imageSuffix =
