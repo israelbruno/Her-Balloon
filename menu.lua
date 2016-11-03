@@ -1,149 +1,146 @@
--------------------------------------------------------------------------------
--- Inicializar composer
---------------------------------------------------------------------------------
-
 local composer = require( "composer" )
 local scene = composer.newScene()
+
 local widget = require( "widget" )
+local utility = require( "utility" )
+local ads = require( "ads" )
 
---------------------------------------------------------------------------------
--- Declarar/Inicializar variáveis/funções
---------------------------------------------------------------------------------
+local params
 
-local carregarSubMenu = {}
+local myData = require( "mydata" )
 
---------------------------------------------------------------------------------
--- Inicia a cena aqui
---------------------------------------------------------------------------------
+local function handlePlayButtonEvent( event )
+    if ( "ended" == event.phase ) then
+        composer.removeScene( "levelselect", false )
+        composer.gotoScene("levelselect", { effect = "crossFade", time = 333 })
+    end
+end
 
+local function handleHelpButtonEvent( event )
+    if ( "ended" == event.phase ) then
+        composer.gotoScene("help", { effect = "crossFade", time = 333, isModal = true })
+    end
+end
+
+local function handleCreditsButtonEvent( event )
+
+    if ( "ended" == event.phase ) then
+        composer.gotoScene("gamecredits", { effect = "crossFade", time = 333 })
+    end
+end
+
+local function handleSettingsButtonEvent( event )
+
+    if ( "ended" == event.phase ) then
+        composer.gotoScene("gamesettings", { effect = "crossFade", time = 333 })
+    end
+end
+
+--
+-- Start the composer event handlers
+--
 function scene:create( event )
-
     local sceneGroup = self.view
 
-    local background = display.newImageRect(sceneGroup, "images/menu.png", 1920, 1080)
-        background.x = display.contentCenterX
-        background.y = display.contentCenterY  
+    params = event.params
+        
+    --
+    -- setup a page background, really not that important though composer
+    -- crashes out if there isn't a display object in the view.
+    --
+    local background = display.newImageRect(sceneGroup, "images/menu.png", 1920, 1080 )
+    background.x = display.contentCenterX
+    background.y = display.contentCenterY
+    sceneGroup:insert( background )
 
-    local btn_startPlaying = widget.newButton {
+    -- Create the widget
+    local playButton = widget.newButton({
+        id = "button1",
         width = 345,
         height = 174,
         defaultFile = "images/btn-play.png",
         overFile = "images/btn-play-over.png",
-        onEvent = handleButtonEvent
-    }
-    btn_startPlaying.x = display.contentCenterX
-    btn_startPlaying.y = display.contentCenterY + 140
-    sceneGroup:insert(btn_startPlaying)
+        onEvent = handlePlayButtonEvent
+    })
+    playButton.x = display.contentCenterX
+    playButton.y = display.contentCenterY + 120
+    sceneGroup:insert( playButton )
 
-    local btn_credits = widget.newButton {
-        width = 345,
-        height = 133,
+    -- Create the widget
+    local settingsButton = widget.newButton({
+        id = "button2",
+        width = 110,
+        height = 110,
+        defaultFile = "images/btn-settings.png",
+        overFile = "images/btn-settings-over.png",
+        onEvent = handleSettingsButtonEvent
+    })
+    settingsButton.x = display.contentCenterX - 70
+    settingsButton.y = display.contentCenterY + 420
+    sceneGroup:insert( settingsButton )
+
+    -- Create the widget
+    local helpButton = widget.newButton({
+        id = "button3",
+        width = 260,
+        height = 100,
+        defaultFile = "images/btn-history.png",
+        overFile = "images/btn-history-over.png",
+        onEvent = handleHelpButtonEvent
+    })
+    helpButton.x = display.contentCenterX
+    helpButton.y = display.contentCenterY + 270
+    sceneGroup:insert( helpButton )
+
+    -- Create the widget
+    local creditsButton = widget.newButton({
+        id = "button4",
+        width = 110,
+        height = 110,
         defaultFile = "images/btn-credits.png",
         overFile = "images/btn-credits-over.png",
-        onEvent = handleButtonCredits
-    }
-
-    btn_credits.x = display.contentCenterX
-    btn_credits.y = display.contentCenterY + 325
-    sceneGroup:insert(btn_credits)
-
-
-    local somMenu = audio.loadStream( "sounds/Avocado_Street.ogg" )
-        audio.play(somMenu, {loops = -1, channel = 1, fadein=1000})
-        audio.setVolume( 0.50 , { channel=1 })
+        onEvent = handleCreditsButtonEvent
+    })
+    creditsButton.x = display.contentCenterX + 90
+    creditsButton.y = display.contentCenterY + 420
+    sceneGroup:insert( creditsButton )
 
 end
-
---------------------------------------------------------------------------------
--- "scene:show()"
---------------------------------------------------------------------------------
 
 function scene:show( event )
-
     local sceneGroup = self.view
-    local phase = event.phase
 
-    if ( phase == "will" ) then
-        
-    elseif ( phase == "did" ) then
+    params = event.params
+    utility.print_r(event)
 
-        local prevScene = composer.getSceneName( "previous" )
-        if(prevScene) then 
-            composer.removeScene(prevScene)
-        end
+    if params then
+        print(params.someKey)
+        print(params.someOtherKey)
+    end
+
+    if event.phase == "did" then
+        composer.removeScene( "game" ) 
     end
 end
-
---------------------------------------------------------------------------------
--- "scene:hide()"
---------------------------------------------------------------------------------
 
 function scene:hide( event )
-
     local sceneGroup = self.view
-    local phase = event.phase
-
-    if ( phase == "will" ) then
-
-    elseif ( phase == "did" ) then
-
+    
+    if event.phase == "will" then
     end
-end
 
---------------------------------------------------------------------------------
--- "scene:destroy()"
---------------------------------------------------------------------------------
+end
 
 function scene:destroy( event )
-
-  audio.stop(1)
-
+    local sceneGroup = self.view
+    
 end
 
---------------------------------------------------------------------------------
--- Configuração de transição entre cenas
---------------------------------------------------------------------------------
-local configTransicaoSubMenu = {
-    effect = "fade", time = 1000
-}
-
---------------------------------------------------------------------------------
--- Submenu do jogo
---------------------------------------------------------------------------------
-function handleButtonEvent( event )
-
-    local HereWeGoSound = audio.loadSound( "sounds/Here_We_Go.ogg" ) 
-        local playLHereWeGo = audio.play( HereWeGoSound, {loops = 0, channel = 2} )
-
-
-    if ( "ended" == event.phase ) then
-        composer.removeScene("menu")
-        composer.gotoScene("level1", configTransicaoSubMenu)
-    end
-
-end
-
---------------------------------------------------------------------------------
--- Creditos do Jogo
---------------------------------------------------------------------------------
-function handleButtonCredits( event )
-
-    if ( "ended" == event.phase ) then
-        composer.removeScene("menu")
-        composer.gotoScene("credits", configTransicaoSubMenu)
-    end
-
-end
-
---------------------------------------------------------------------------------
--- Listener Setup
---------------------------------------------------------------------------------
-
+---------------------------------------------------------------------------------
+-- END OF YOUR IMPLEMENTATION
+---------------------------------------------------------------------------------
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
-
----------------------------------------------------------------------------------
-
 return scene

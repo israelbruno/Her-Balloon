@@ -24,14 +24,12 @@ local deslocamento_balloon = 0
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
--- -----------------------------
+-- -----------------------------------------------------------------------------------
 
-------------------------------------------------------
-
-local teto = display.newRect(1, display.actualContentHeight-980, display.contentWidth*3, 0.5)
+local teto = display.newRect(1, display.actualContentHeight-970, display.contentWidth*3, 0.5)
 physics.addBody(teto, "static", {friction = 0.1})
 
-local chao = display.newRect(1, display.actualContentHeight-30, display.contentWidth*3, 0.5)
+local chao = display.newRect(1, display.actualContentHeight-50, display.contentWidth*3, 0.5)
 physics.addBody(chao, "static", {friction = 0.1})
 
 local function altera_deslocamento_balloon( event )
@@ -84,28 +82,25 @@ function scene:create( event )
 
     bar = display.newImage( "images/bar.png" )
 
-    bg_chicago1 = display.newImage( "images/bg_chicago.jpg" )
+    bg_chicago1 = display.newImage( "images/bg_chicago.png" )
         bg_chicago1.x = centroTelaX
         bg_chicago1.y = centroTelaY
-    bg_chicago2 = display.newImage( "images/bg_chicago.jpg" )
+    bg_chicago2 = display.newImage( "images/bg_chicago.png" )
         bg_chicago2.x = bg_chicago1.x + largura_da_tela
         bg_chicago2.y = centroTelaY
 
     bar = display.newImage( "images/bar.png" )
-        bg_chicago2.x = bg_chicago1.x + largura_da_tela
-        bg_chicago2.y = centroTelaY
+        bar.x = centroTelaX
+        bar.y = centroTelaY
 
-    balloon = display.newImageRect( "images/balloon.png", 614*.20, 676*.20 )
+    balloon = display.newImageRect( "images/balloon.png", 500*.20, 550*.20 )
         balloon.x = 200
         balloon.y = centroTelaY
 
-    local somMenu = audio.loadStream( "sounds/Chicago.ogg" )
-    audio.play(somMenu, {loops = -1, channel = 1, fadein = 2000})
-    audio.setVolume( 0.50 , { channel=1 })    
+    -- local somMenu = audio.loadStream( "sounds/Chicago.ogg" )
+    -- audio.play(somMenu, {loops = -1, channel = 1, fadein = 2000})
+    -- audio.setVolume( 0.50 , { channel=1 })    
 
-
-
-    bar = display.newImage( "images/bar.png" )
 end
 
 
