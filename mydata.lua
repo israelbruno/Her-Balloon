@@ -1,10 +1,10 @@
 M = {}
-M.maxLevels = 20
+M.maxLevels = 3
 M.levelScore = 0
 M.products = {}
 M.settings = {}
 M.settings.currentLevel = 1
-M.settings.unlockedLevels = 20
+M.settings.unlockedLevels = 0
 M.settings.bestScore = 0
 M.settings.soundOn = true
 M.settings.musicOn = true

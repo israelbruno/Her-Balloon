@@ -26,7 +26,7 @@ if myData.settings == nil then
 	myData.settings.musicOn = true
     myData.settings.isPaid = false
 	myData.settings.currentLevel = 1
-	myData.settings.unlockedLevels = 20
+	myData.settings.unlockedLevels = 1
     myData.settings.bestScore = 0
 	myData.settings.levels = {}
 	utility.saveTable(myData.settings, "settings.json")
@@ -62,6 +62,10 @@ end
 
 --
 -- Load your global sounds here
+
+myData.backgroundMusic = audio.loadStream( "audio/Avocado_Street.ogg" )
+myData.startGame = audio.loadSound( "audio/Here_We_Go.ogg" )
+
 -- Load scene specific sounds in the scene
 --
 -- myData.splatSound = audio.load("audio/splat.wav")

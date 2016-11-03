@@ -18,10 +18,13 @@ end
 local function handleLevelSelect( event )
 
     if ( "ended" == event.phase ) then
+
+        local startGameSound = audio.play( myData.startGame, {loops = 0, channel = 2} )
+
         -- set the current level to the ID of the selected level
         myData.settings.currentLevel = event.target.id
-        composer.removeScene( "game", false )
-        composer.gotoScene( "game", { effect = "crossFade", time = 333 } )
+        composer.removeScene( "menu", false )
+        composer.gotoScene( "level1", { effect = "crossFade", time = 333 } )
     end
 end
 --
@@ -36,7 +39,7 @@ function scene:create( event )
     -- setup a page background, really not that important though composer
     -- crashes out if there isn't a display object in the view.
     --
-    local background = display.newRect( 0, 0, 570, 360)
+    local background = display.newRect( 0, 0, 1920, 1080)
     background.x = display.contentCenterX
     background.y = display.contentCenterY
     sceneGroup:insert(background)
@@ -49,8 +52,8 @@ function scene:create( event )
 
     --local x = 90
     --local y = 115
-    local x = 0
-    local y = 0
+    local x = -350
+    local y = 400
     local buttons = {}
     local buttonBackgrounds = {}
     local buttonGroups = {}
@@ -58,14 +61,14 @@ function scene:create( event )
     local cnt = 1
     for i = 1, myData.maxLevels do
         buttonGroups[i] = display.newGroup()
-        buttonBackgrounds[i] = display.newRoundedRect( x, y, 42, 32, 8 )
+        buttonBackgrounds[i] = display.newRoundedRect( x, y, 400, 300, 10 )
         buttonBackgrounds[i]:setFillColor( 1, 0, 1, 0.333 )
         buttonBackgrounds[i]:setStrokeColor( 1, 0, 1, 0.667 )
         buttonBackgrounds[i].strokeWidth = 1
         buttonGroups[i]:insert(buttonBackgrounds[i])
         buttonGroups[i].id = i
         if myData.settings.unlockedLevels == nil then
-            myData.settings.unlockedLevels = 10
+            myData.settings.unlockedLevels = 1
         end
         
         if i <= myData.settings.unlockedLevels then
@@ -79,12 +82,12 @@ function scene:create( event )
         buttons[i].y = y
         buttonGroups[i]:insert(buttons[i])
 
-        x = x + 55
+        x = x + 450
         cnt = cnt + 1
-        if cnt > 5 then
+        if cnt > 3 then
             cnt = 1
             x = 0
-            y = y + 42
+            y = y + 100
         end
         levelSelectGroup:insert(buttonGroups[i])
     end

@@ -113,9 +113,8 @@ function scene:create( event )
 
 
     -- Background Music
-    
-    local backgroundMusic = audio.loadStream( "sounds/Avocado_Street.ogg" )
-    local backgroundMusicChannel = audio.play( backgroundMusic, { channel=1, loops=-1, fadein=5000 } )
+
+    backgroundMusicChannel = audio.play( myData.backgroundMusic, { channel=1, loops=-1, fadein=5000 } )
 
 end
 
@@ -145,8 +144,8 @@ end
 
 function scene:destroy( event )
     local sceneGroup = self.view
-    
-    audio.stop( backgroundMusicChannel )
+
+    audio.stop(1)
     
 end
 
