@@ -100,7 +100,6 @@ function scene:create( event )
 
 end
 
-
 -- show()
 function scene:show( event )
 
