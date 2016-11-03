@@ -74,6 +74,7 @@ myData.startGame = audio.loadSound( "audio/Here_We_Go.ogg" )
 --
 -- Other system events
 --
+
 local function onKeyEvent( event )
 
     local phase = event.phase
