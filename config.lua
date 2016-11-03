@@ -1,4 +1,5 @@
---calculate the aspect ratio of the device:
+-- Calculate the aspect ratio of the device:
+
 local aspectRatio = display.pixelHeight / display.pixelWidth
 
 application = {
