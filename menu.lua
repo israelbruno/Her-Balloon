@@ -39,6 +39,7 @@ end
 --
 -- Start the composer event handlers
 --
+
 function scene:create( event )
     local sceneGroup = self.view
 
@@ -48,12 +49,14 @@ function scene:create( event )
     -- setup a page background, really not that important though composer
     -- crashes out if there isn't a display object in the view.
     --
+    
     local background = display.newImageRect(sceneGroup, "images/menu.png", 1920, 1080 )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
     sceneGroup:insert( background )
 
-    -- Create the widget
+    -- Play Button
+    
     local playButton = widget.newButton({
         id = "button1",
         width = 345,
@@ -66,7 +69,8 @@ function scene:create( event )
     playButton.y = display.contentCenterY + 120
     sceneGroup:insert( playButton )
 
-    -- Create the widget
+    -- Settings Button
+    
     local settingsButton = widget.newButton({
         id = "button2",
         width = 110,
@@ -79,7 +83,8 @@ function scene:create( event )
     settingsButton.y = display.contentCenterY + 420
     sceneGroup:insert( settingsButton )
 
-    -- Create the widget
+    -- History Button
+    
     local helpButton = widget.newButton({
         id = "button3",
         width = 260,
@@ -92,7 +97,8 @@ function scene:create( event )
     helpButton.y = display.contentCenterY + 270
     sceneGroup:insert( helpButton )
 
-    -- Create the widget
+    -- Credits Button
+    
     local creditsButton = widget.newButton({
         id = "button4",
         width = 110,
@@ -104,6 +110,12 @@ function scene:create( event )
     creditsButton.x = display.contentCenterX + 90
     creditsButton.y = display.contentCenterY + 420
     sceneGroup:insert( creditsButton )
+
+
+    -- Background Music
+    
+    local backgroundMusic = audio.loadStream( "sounds/Avocado_Street.ogg" )
+    local backgroundMusicChannel = audio.play( backgroundMusic, { channel=1, loops=-1, fadein=5000 } )
 
 end
 
@@ -133,6 +145,8 @@ end
 
 function scene:destroy( event )
     local sceneGroup = self.view
+    
+    audio.stop( backgroundMusicChannel )
     
 end
 
